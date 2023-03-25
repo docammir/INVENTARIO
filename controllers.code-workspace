@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "controllers"
+		},
+		{
+			"path": "databases"
+		},
+		{
+			"path": "modelos"
+		},
+		{
+			"path": "node_modules"
+		},
+		{
+			"path": "routes"
+		}
+	]
+}
