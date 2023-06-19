@@ -9,6 +9,18 @@ const Usuario = Schema({
     required: [true, "Nombre requerido"],
   },
 
+  password:{
+    //objeto
+    type: String,
+    required: [true, "contraseña requerido"],
+  },
+
+  rol:{
+    //objeto
+    type: String,
+    
+  },
+
   estado: {
     type: Boolean,
     default: true,
@@ -30,6 +42,9 @@ const Usuario = Schema({
     type: Date,
     default: new Date(),
   },
+
+  
+
 });
 
 module.exports = model("Usuarios", Usuario);

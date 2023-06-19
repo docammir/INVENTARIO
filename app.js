@@ -8,9 +8,25 @@ const dotenv = require("dotenv").config();
 
 const app = express();
 
+
+
 // middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+//postman
+app.post("/api/usuarios", (req, res) => {
+    console.log ( req.body)
+    res.send(200, {message:"se ha recibido"})
+    })
+
+/*app.use("/api/usuarios", (req, res) => {
+    console.log ( req.body)
+    res.send(200, {message:"se ha recibido"})
+    }
+
+)*/
+
 
 app.use("/api/tiposequipos", tipoEquipo);
 app.use("/api/usuario", usuario);

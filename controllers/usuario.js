@@ -1,10 +1,21 @@
 const Usuarios = require("../modelos/usuarios");
 const { request, response } = require("express");
+const express = require("express");
+
+
 
 // crear
-const createUsuarios = async (req = request, res = response) => {
+const createUsuarios = async (req = request, res = response) => { 
+ 
+ // console.log(res.body.nombre);
+ 
+  const nombre = req.body.nombre ? req.body.nombre.toUpperCase() : "";
   try {
     const nombre = req.body.nombre ? req.body.nombre.toUpperCase() : "";
+    const password = req.body.password ? req.body : "";
+    const rol = req.body.rol ? req.body : "";
+    //const passwordDB = await password.findOne({ password }); //select * from password
+
     const usuariosDB = await Usuarios.findOne({ nombre }); //select * from usuario
 
     if (usuariosDB) {
@@ -12,11 +23,22 @@ const createUsuarios = async (req = request, res = response) => {
     }
     const data = {
       nombre, // nombre: nombre
+      password, // contraseña
+      rol // rol
     };
-    const newUsuario = new Usuarios(data);
-    console.log(newUsuario);
-    await newUsuario.save();
-    return res.status(201).json(newUsuario);
+    console.log( "cual es el rol " + req.body.rol);
+
+    if(req.body.rol == 1 || req.body.rol == 2 ){
+      const newUsuario = new Usuarios(password);
+      console.log("nuevo ususario"+newUsuario);
+      console.log("nuevo ususario"+data);
+      await newUsuario.save();
+      return res.status(201).json(newUsuario);
+    }else{
+      
+      return res.status(500).json("Debes colocar como rol 1 para administrador o 2 para docente");
+    }
+   
   } catch (e) {
     return res.status(500).json({
       msg: "Error general " + e,
@@ -27,7 +49,7 @@ const createUsuarios = async (req = request, res = response) => {
 //listar todos
 const listarUsuarios = async (req = request, res = response) => {
   try {
-    console.log("Ejecuto usuarios");
+    console.log("Ejecuto usuarios"); 
     // const { estado } = req.query;
     const usuariosDB = await Usuarios.find({});
     if (usuariosDB.length == 0)
@@ -35,6 +57,7 @@ const listarUsuarios = async (req = request, res = response) => {
     //select * from usuario where estado=?
     return res.json(usuariosDB);
   } catch (e) {
+    console.log(e)
     return res.status(500).json({
       msg: "Error general " + e,
     });
